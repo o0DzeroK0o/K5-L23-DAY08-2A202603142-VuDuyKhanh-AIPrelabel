@@ -1,1 +1,4 @@
 case_id,image,nguon,van_de,quyet_dinh,quy_tac_ghi_vao_guideline,phien_ban_guideline
+CAL-01,img_013|img_004,loi_may,YOLO26 gọi tuk-tuk là car,Đề xuất kiểm hình khung xe và số bánh nhìn thấy khi rà car hoặc truck,Mục 2 của v1.0 về nhận diện three_wheeler,v1.1
+CAL-02,img_001,cau_hoi_mo,Box truck điểm 0.8758 có IoU 0.983 với box car gán tay,Đề xuất dùng conf để xếp thứ tự tự kiểm và so lại lớp cùng biên trên ảnh gốc,Mục 3 và mục 6.7 của v1.0,v1.1
+CAL-03,img_013,cau_hoi_mo,Mask xe giao vùng box người lái dưới mui,Đề xuất giữ mốc nhìn thấy 20% và rà riêng ranh giới người với xe,Mục 4.2 và mục 6.4 của v1.0,v1.1

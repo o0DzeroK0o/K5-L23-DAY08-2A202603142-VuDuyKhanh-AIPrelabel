@@ -360,6 +360,30 @@ class Day08RegressionAndWorkflowTest(unittest.TestCase):
         self.assertNotIn("không nằm trong mẫu", out_sep)
         self.assertNotIn("CHƯA kiểm", out_sep)
 
+    def test_qc_report_requires_completed_sample_to_suggest_release(self) -> None:
+        qc_dir = self.sub / "qc"
+        (qc_dir / "qc_sample.csv").write_text(
+            "image,la_ca_kho,so_doi_tuong\nimg_003.jpg,no,4\nimg_004.jpg,no,6\n", encoding="utf-8"
+        )
+        header = "image,object_id,error_type,reviewer,note\n"
+        review_path = qc_dir / "qc_review.csv"
+        review_path.write_text(header + "img_003.jpg,,khong,test,\nimg_004.jpg,,,,\n", encoding="utf-8")
+        report_path = qc_dir / "qc_report_auto.md"
+
+        self.run_script("qc_report")
+        pending = report_path.read_text(encoding="utf-8")
+        self.assertIn("**HOLD**", pending)
+        self.assertIn("Đã kiểm 1/2 ảnh mẫu", pending)
+        self.assertIn("Chưa đủ dữ liệu", pending)
+        self.assertNotIn("Wilson", pending)
+
+        review_path.write_text(header + "img_003.jpg,,khong,test,\nimg_004.jpg,,khong,test,\n", encoding="utf-8")
+        self.run_script("qc_report")
+        complete = report_path.read_text(encoding="utf-8")
+        self.assertIn("**RELEASE**", complete)
+        self.assertIn("0/2 = 0.0%", complete)
+        self.assertIn("Wilson", complete)
+
     # ------------------------------------------------------------------ BUG-09
     def test_bug09_cli_validation_and_warnings(self) -> None:
         out_m1 = self.run_script(

@@ -57,6 +57,7 @@ def main() -> None:
     unchecked = [i for i in imgs if i not in checked]
     if unchecked:
         warns.append(f"{len(unchecked)} ảnh trong mẫu CHƯA kiểm: {', '.join(unchecked[:8])}")
+    sample_complete = bool(n_img) and not unchecked
     err_objs, err_imgs = {(i, o) for i, o, _ in err_rows}, {i for i, _, _ in err_rows}
     types = Counter(t for _, _, t in err_rows)
     ex = defaultdict(list)
@@ -80,13 +81,14 @@ def main() -> None:
     if args.guideline_gap > 0 or args.data_problem > 0:
         decision = "HOLD"
         reasons = [f"guideline chưa rõ ({args.guideline_gap} ca) / dữ liệu có vấn đề ({args.data_problem} ảnh) -> giữ lại làm rõ"]
+    elif not sample_complete:
+        decision = "HOLD"
+        reasons = [f"QC mới kiểm {len(checked)}/{n_img} ảnh mẫu, cần kiểm đủ mẫu để chốt quyết định."]
     else:
         decision = "REWORK" if rw else "RELEASE"
         reasons = rw or [f"ảnh lỗi {0 if rate_img is None else rate_img * 100:.1f}% <= {r['error_rate_img_max'] * 100:.0f}%, "
                          "không lỗi hệ thống, bắt bẫy / nhất quán đạt (nếu đã đo)"]
-    if unchecked:
-        reasons.append("LƯU Ý: còn ảnh mẫu chưa kiểm -> kết luận chưa đáng tin")
-    if n_img:
+    if sample_complete:
         k_, n_ = len(err_imgs), n_img
         z = 1.96
         ph = k_ / n_
@@ -96,10 +98,11 @@ def main() -> None:
 
     L = ["# Báo cáo QC tự động (nháp)", "", "> **Gợi ý** do script tính; bạn xác nhận. Script chỉ đếm theo phiếu kiểm bằng mắt người.", "",
          "## Mẫu", f"- {n_img} ảnh ({sum(1 for s in sample if s['la_ca_kho'] == 'yes')} ca khó + "
-         f"{sum(1 for s in sample if s['la_ca_kho'] != 'yes')} ngẫu nhiên), {n_obj} đối tượng.", f"- taxonomy {tax.version}", "",
+         f"{sum(1 for s in sample if s['la_ca_kho'] != 'yes')} ngẫu nhiên), {n_obj} đối tượng.",
+         f"- Đã kiểm {len(checked)}/{n_img} ảnh mẫu.", f"- taxonomy {tax.version}", "",
          "## Số đo", "| Chỉ số | Giá trị | Mẫu số |", "|---|---|---|",
-         f"| Lỗi **theo đối tượng** | {pc(len(err_objs), n_obj)} | {n_obj} đối tượng trong mẫu |",
-         f"| **Ảnh có lỗi** (dùng cho ngưỡng) | {pc(len(err_imgs), n_img)} | {n_img} ảnh trong mẫu |"]
+         f"| Lỗi **theo đối tượng** | {pc(len(err_objs), n_obj) if sample_complete else 'Chưa đủ dữ liệu'} | {n_obj} đối tượng trong mẫu |",
+         f"| **Ảnh có lỗi** (dùng cho ngưỡng) | {pc(len(err_imgs), n_img) if sample_complete else 'Chưa đủ dữ liệu'} | {n_img} ảnh trong mẫu |"]
     if rs:
         L.append(f"| Máy: accepted / edited / deleted | {pc(rs['accepted'], rs['pre_boxes'])} / {pc(rs['edited'], rs['pre_boxes'])} / {pc(rs['deleted'], rs['pre_boxes'])} | {rs['pre_boxes']} box máy |")
         L.append(f"| Máy: added | {pc(rs['added'], rs['final_objects'])} | {rs['final_objects']} đối tượng sau duyệt |")
@@ -112,8 +115,10 @@ def main() -> None:
     L += ["", "## Top 3 loại lỗi"]
     if top3:
         L += ["| Loại lỗi | Số lỗi | Ảnh ví dụ |", "|---|---|---|"] + [f"| {t} | {c} | {', '.join(ex[t][:3])} |" for t, c in top3]
+    elif not checked:
+        L.append("(chưa có ảnh được kiểm)")
     else:
-        L.append("(không ghi nhận lỗi nào)")
+        L.append("(không ghi nhận lỗi ở phần đã kiểm)")
     if systematic:
         L.append(f"\n**Lỗi hệ thống**: '{top3[0][0]}' lặp lại -> sửa quy tắc / recipe, không chỉ sửa từng ảnh.")
     if warns:
@@ -121,7 +126,7 @@ def main() -> None:
     if notes:
         L += ["", "## Giới hạn thống kê"] + [f"- {x}" for x in notes]
     L += ["", "## Gợi ý quyết định", f"**{decision}**", ""] + [f"- {x}" for x in reasons]
-    L += ["", "Cây quyết định: Hold (guideline chưa rõ / dữ liệu hỏng) -> Rework (> ngưỡng, lỗi lặp, bắt bẫy / nhất quán thấp) -> Release."]
+    L += ["", "Cây quyết định: Hold (QC chưa đủ / guideline chưa rõ / dữ liệu hỏng) -> Rework (> ngưỡng, lỗi lặp, bắt bẫy / nhất quán thấp) -> Release."]
     text = "\n".join(L) + "\n"
     (qc / "qc_report_auto.md").write_text(text, encoding="utf8")
     print(text)

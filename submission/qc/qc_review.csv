@@ -1,0 +1,15 @@
+image,object_id,error_type,reviewer,note
+img_003.jpg,5,thua,Vũ Duy Khanh,Box sát mép trái bao dải quầy ven đường; phần trong box không đủ hình dạng một xe ba bánh để gán.
+img_003.jpg,6,thua,Vũ Duy Khanh,Box bao một phần chiếc xe máy đỗ sau người mặc áo xanh; xe đã có box motorbike #9.
+img_003.jpg,10,sai_vi_tri_kich_thuoc,Vũ Duy Khanh,Cạnh trên và cạnh trái cắt vào mái bạt gắn liền với xe chở rau ở tiền cảnh.
+img_003.jpg,14,thua,Vũ Duy Khanh,Thùng và bánh của cùng xe chở rau tiền cảnh đã có box #10; #14 chỉ bao phần dưới của chính xe đó.
+img_003.jpg,25,sai_lop,Vũ Duy Khanh,Xe thùng màu xám ở xa có hai cửa sau và đèn hậu; box gắn nhầm lớp three_wheeler.
+img_006.jpg,,bo_sot,Vũ Duy Khanh,"Thiếu person áo sáng có quai đen cạnh hàng xe máy giữa ngõ, khoảng x=560–587 và y=363–432. Box #76 thuộc người ngồi bên phải."
+img_014.jpg,145,thua,Vũ Duy Khanh,"Box khoanh quầy gỗ sát mép trái, không có xe trong box."
+img_014.jpg,147,thua,Vũ Duy Khanh,Box khoanh thúng cùng hàng hóa ở đầu quang gánh bên phải của người đi bộ.
+img_014.jpg,153,thua,Vũ Duy Khanh,Box khoanh chậu và xô đỏ ở đầu quang gánh bên trái của người đi bộ.
+img_031.jpg,449,sai_vi_tri_kich_thuoc,Vũ Duy Khanh,Box xe đạp bắt đầu ở x≈316 nhưng vành bánh sau còn thấy tới x≈243.
+img_031.jpg,450,thua,Vũ Duy Khanh,Box khoanh mũ màu cam trên kệ quần áo; không có người đội mũ.
+img_031.jpg,451,thua,Vũ Duy Khanh,Box chỉ bao phần đầu và bánh trước của chiếc xe đạp đã có box #449.
+img_035.jpg,504,thua,Vũ Duy Khanh,Box chỉ bao mui đỏ của cùng chiếc xích lô đã có box #530.
+img_035.jpg,530,sai_vi_tri_kich_thuoc,Vũ Duy Khanh,Box giữ ghế và bánh nhưng cắt mất mui đỏ gắn liền phía trên.
