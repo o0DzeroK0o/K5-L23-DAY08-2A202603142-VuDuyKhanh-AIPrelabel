@@ -1,1 +1,3 @@
 step,images,minutes,note
+gold_manual,4,90,Gán tay 4 ảnh gold; thời gian thực tế
+batch_model_compare,24,1.09,"Tổng inference CPU 65.4 giây từ r08–r11. Chưa tính tải model, thao tác CVAT và duyệt bằng mắt."
