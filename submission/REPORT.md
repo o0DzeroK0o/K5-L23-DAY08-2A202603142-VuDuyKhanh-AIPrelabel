@@ -69,7 +69,7 @@ Mục 4.2 của guideline yêu cầu tách người và xe theo biên nhìn th�
 
 Bản ứng viên có 24 ảnh và 531 box. Với seed 42, script rút 5 ảnh ngẫu nhiên gồm `img_003.jpg`, `img_006.jpg`, `img_014.jpg`, `img_031.jpg` và `img_035.jpg`. Năm ảnh có 110 đối tượng. Không có ảnh được đánh dấu `can_review` trong bản xuất đang dùng. [Mẫu QC](qc/qc_sample.csv) · [Tóm tắt bộ ứng viên](release/release_summary.csv)
 
-Codex đã mở đủ 5 ảnh gốc và so với ảnh overlay có mã box. Phiếu ghi **14 lỗi trên 110 đối tượng trong mẫu (12,7%)** theo cách tính của script. Trong đó có 13 box có ID và một người bị bỏ sót, chưa có ID. Cả **5/5 ảnh** có ít nhất một lỗi. [Phiếu QC](qc/qc_review.csv)
+Đã mở đủ 5 ảnh gốc và so với ảnh overlay có mã box. Phiếu ghi **14 lỗi trên 110 đối tượng trong mẫu (12,7%)** theo cách tính của script. Trong đó có 13 box có ID và một người bị bỏ sót, chưa có ID. Cả **5/5 ảnh** có ít nhất một lỗi. [Phiếu QC](qc/qc_review.csv)
 
 Box thừa chiếm 9/14 lỗi. Rõ nhất là ở `img_014.jpg`, hai đầu quang gánh và quầy gỗ bị gán thành xe ba bánh. Ở `img_031.jpg`, cùng một chiếc xe đạp có hai box và box lớn cắt mất một phần bánh sau. Tổng cộng có 3 lỗi sai biên, 1 lỗi sai lớp ở xe thùng trong `img_003.jpg` và 1 lỗi bỏ sót người áo sáng bên hàng xe máy trong `img_006.jpg`.
 

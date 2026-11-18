@@ -16,5 +16,5 @@
 - So với gold — Precision 53/68 (77,9%), recall 53/89 (59,6%).
 - Bắt bẫy — 11/12 (91,7%) lọt một bẫy thiếu box tại `img_006.jpg`.
 - Thời gian duyệt bằng mắt — 
-- QC — Codex đã kiểm trực quan đủ 5 ảnh. Ghi 14 lỗi trên 110 đối tượng (12,7%) theo cách tính của script, 5/5 ảnh có lỗi (100%).
+- QC — Đã kiểm trực quan đủ 5 ảnh. Ghi 14 lỗi trên 110 đối tượng (12,7%) theo cách tính của script, 5/5 ảnh có lỗi (100%).
 - Trạng thái — **Rework** vì tỷ lệ ảnh lỗi vượt ngưỡng 2% và có 9/14 lỗi là box thừa. [Báo cáo](submission/REPORT.md)
